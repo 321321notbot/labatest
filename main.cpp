@@ -3,7 +3,7 @@
 #include "Worker.hpp"
 #include "WorkerList.hpp"
 
-#define SWAP(A, B) { Worker t = A; A = B; B = t; } //������ �������
+#define SWAP(A, B) { Worker t = A; A = B; B = t; } //меняем местами
 
 using namespace std;
 
@@ -15,7 +15,7 @@ int main() {
 	bool run = true;
 	int mode;
 	while (run) {
-
+		cout << "\n1. ввод сотрудников\n2. вывод отсортированной базы данных \n3. Поиск по стажу работы\n";
 		// cout menu here
 
 		cin >> mode;
