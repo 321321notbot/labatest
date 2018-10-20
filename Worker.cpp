@@ -29,3 +29,25 @@ void Worker::setYear(int n){
 int Worker::getYear()const{ 
 	return year;
 }
+
+std::istream& operator >>(std::istream& in, Worker& w){
+	if(!(in >> w.surname >> w.init >> w.year)){//если некорректный ввод, выбиваем исключение
+		throw Exception("Ошибка ввода");
+	}
+	return in;
+}
+std::ostream& operator <<(std::ostream& out, const Worker& w){
+	out << "\nДанные: " << w.surname
+		 << " " << w.init
+		 << "\nГод: " << w.year;
+    return out;
+}
+
+Worker& Worker::operator =(const Worker& w){
+	if(this != &w){//защита от самоприсваивания
+		surname = w.surname;
+		init = w.init;
+		year = w.year;
+	}
+	return *this;
+}
