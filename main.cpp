@@ -1,65 +1,43 @@
-#include "Worker.hpp"
 #include <iostream>
-#define SWAP(A, B) { Worker t = A; A = B; B = t; } //меняем местами
+
+#include "Worker.hpp"
+#include "WorkerList.hpp"
+
+#define SWAP(A, B) { Worker t = A; A = B; B = t; } //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 using namespace std;
 
-int main(){
+int main() {
 	setlocale(LC_ALL, "");
-	const int w_count = 10;//количество рабочих
-	Worker workers[w_count];
-	int a;
-	//меню
-	while(true){
-		cout << "\n1. Выход\n2. Считать сотрудников\n3. Поиск\n";
-		if(!(cin >> a)){//если некорректный ввод, то пропускаем всё
-		 continue;
+	WorkerList *wr = new WorkerList();
+	const int count = 2;
+
+	bool run = true;
+	int mode;
+	while (run) {
+
+		// cout menu here
+
+		cin >> mode;
+		if (mode == 0) {
+			run = false;
 		}
-		if(a == 1){
-			return 0;
+		else if (mode == 1) {
+			wr->getWorkers(count);
 		}
-		else if(a == 2){
-			//считываем данные 
-			cout << "Фамилия инициалы год\n";
-			for(int i =0; i < w_count; ++i){
-				try{
-					cin >> workers[i];
-				}	  //обрабатываем исключение
-				catch(const Exception& e){
-					cout << "\n" << e.what() << "\n";
-					--i;//откатываем i назад для повторного ввода
-				}
-			}
-			/*сортируем пузырьком по фамилиям\*/
-			int j, n = w_count;
-			  do {
-				int nn = 0;
-				for (j = 1; j < n; ++j)
-				  if (workers [j-1].getSurname() > workers[j].getSurname()) {
-					SWAP( workers[j-1], workers[j] );
-					nn = j;
-				  }
-				n = nn;
-			  } while (n);
+		else if (mode == 2) {
+			cout << *wr;
 		}
-		else if(a == 3){
-			cout << "Год: ";
-			if(!(cin >> a)){
-				cout << "ошика ввода";
-				continue;
-			}
-			int i = 0;
-			int f = 0;
-			for(; i < w_count; ++i){
-				if(workers[i].getYear() > a){
-					cout << workers[i] << '\n';
-					f = 1;
-				}
-			}
-			if(f == 0){
-				cout << "Не найдено!";
-			}
+		else if (mode == 3) {
+			int maxAge;
+			cout << "Enter max age" << endl;
+			cin >> maxAge;
+			wr->filter(maxAge);
+		}
+		else {
+			continue;
 		}
 	}
 
+	return 0;
 }
