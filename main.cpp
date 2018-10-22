@@ -12,7 +12,7 @@ int main() {
 	WorkerList *wr = new WorkerList();
 	const int count = 2;
 
-	bool run = true;
+	bool run = true;//фй
 	int mode;
 	while (run) {
 		cout << "\n1. ввод сотрудников\n2. вывод отсортированной базы данных \n3. Поиск по стажу работы\n";
