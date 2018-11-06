@@ -18,7 +18,8 @@ public:
 	void remove(int index);
 	void getWorkers(int count);
 	void sort();
-	void filter(int maxAge);
+	void showByYear(int maxAge);
+	WorkerList *filter(int maxAge);
 
 	~WorkerList();
 };

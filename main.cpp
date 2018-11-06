@@ -32,7 +32,7 @@ int main() {
 			int maxAge;
 			cout << "Enter max age" << endl;
 			cin >> maxAge;
-			wr->filter(maxAge);
+			wr->showByYear(maxAge);
 		}
 		else {
 			continue;

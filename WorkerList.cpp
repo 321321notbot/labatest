@@ -44,27 +44,25 @@ void WorkerList::add(Worker &w) {
 }
 
 void WorkerList::remove(int index) {
-	if (index >= this->size || index < 0) {
-		cout << "Cant delete, try another index" << endl;
-	}
-	else {
-		auto **copy = new Worker*[this->size];
-		for (int i = 0; i < this->size; ++i) {
-			copy[i] = this->data[i];
-		}
-		this->size--;
-		this->data = new Worker*[this->size];
-		int k = 0;
-		for (int i = 0; i < this->size + 1; ++i) {
-			if (i == index) {
-				continue;
-			}
-			this->data[k] = copy[i];
-			k++;
-		}
-
-		delete[]copy;
-	}
+	try {
+        auto **copy = new Worker*[this->size];
+        for (int i = 0; i < this->size; ++i) {
+            copy[i] = this->data[i];
+        }
+        this->size--;
+        this->data = new Worker*[this->size];
+        int k = 0;
+        for (int i = 0; i < this->size + 1; ++i) {
+            if (i == index) {
+                continue;
+            }
+            this->data[k] = copy[i];
+           k++;
+       }
+        delete[]copy;
+	} catch (Exception e) {
+    	cout << "Error, please enter valid index" << endl << e.what() << endl;
+    }
 }
 
 void WorkerList::getWorkers(int count) {
@@ -83,24 +81,33 @@ void WorkerList::getWorkers(int count) {
 
 void WorkerList::sort() {
 	Worker *wr;
-	for (int i = 0; i < size - 1; ++i) {
-		if (data[i]->getSurname() > data[i + 1]->getSurname()) {
-			wr = data[i];
-			data[i] = data[i + 1];
-			data[i + 1] = wr;
+	// Bubble sort
+	for (int j = 0; j < size - 1; ++j) {
+		for (int i = j; i < size - 1; ++i) {
+			if (data[i]->getSurname() > data[i + 1]->getSurname()) {
+	wr = data[i];
+				data[i] = data[i + 1];
+				data[i + 1] = wr;
+			}
 		}
 	}
 }
 
-void WorkerList::filter(int maxAge) {
-	bool fl = false;
-	for (int i = 0; i < size; ++i) {
-		if (data[i]->getYear() >= maxAge) {
-			fl = true;
-			cout << *data[i] << endl;
-		}
-	}
-	if (!fl) {
-		cout << "Not found" << endl;
-	}
+WorkerList *WorkerList::filter(int maxAge) {
+    WorkerList *wr = new WorkerList();
+ 	for (int i = 0; i < size; ++i) {
+ 		if (data[i]->getYear() >= maxAge) {
+                wr->add(*data[i]);
+        cout << "filtering" << *wr << endl;
+	return wr;
 }
+
+void WorkerList::showByYear(int maxAge) {
+    WorkerList *wr = this->filter(maxAge);
+    if (wr->getSize() == 0) {
+        cout << "No workers with maxAge" << endl;
+        return;
+    }
+    cout << wr->getSize();
+    cout << *wr << endl;
+ }
